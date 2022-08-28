@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">Tryk for at åbne indstillinger</string>
     <string name="notif_title">Velociraptorovervåger kører</string>
     <string name="accessibility_service_description">For at se forgrundsappen og vise hastighedsgrænsen, skal tilgængelighedstjeneste være aktiveret.</string>

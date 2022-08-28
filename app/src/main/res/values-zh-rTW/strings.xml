@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">輕觸以設定</string>
     <string name="notif_title">Velociraptor 速限提醒</string>
     <string name="accessibility_service_description">為了使 Velociraptor 能夠偵測目前執行的應用程式以便適時地顯示速限提醒，請啟用此項無障礙服務。</string>

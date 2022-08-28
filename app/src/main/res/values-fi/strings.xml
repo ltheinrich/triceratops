@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">Kosketa avataksesi asetukset</string>
     <string name="notif_title">Velociraptorin näyttö käynnissä</string>
     <string name="accessibility_service_description">Helppokäyttöisyyspalvelun tulee olla päällä, jotta etualalla oleva sovellus tunnistetaan ja nopeusrajoitus näytetään.</string>

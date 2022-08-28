@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">轻触来打开设置</string>
     <string name="notif_title">Velociraptor速度限制</string>
     <string name="accessibility_service_description">Velociraptor可以随谷歌地图自动开启速度提醒，请在设置中开启无障碍服务</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">Toque para abrir ajustes</string>
     <string name="notif_title">Velociraptor: Monitor ejecutandose</string>
     <string name="accessibility_service_description">Permite a Velociraptor mostrarse automaticamente al detectar la aplicacion en primer plano.\n\nVelociraptor no usa ninguna otra informacion mas que la de la aplicacion en primer plano.</string>

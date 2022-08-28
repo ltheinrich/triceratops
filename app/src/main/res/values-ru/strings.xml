@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">Нажмите, чтобы открыть настройки</string>
     <string name="notif_title">Velociraptor монитор работает</string>
     <string name="accessibility_service_description">Чтобы обнаружить приложение на переднем плане и дисплей ограничения скорости, доступность услуг должны быть включены.</string>

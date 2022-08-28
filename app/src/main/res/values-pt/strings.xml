@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Velociraptor</string>
+    <string name="app_name">Triceratops</string>
     <string name="notif_content">Pressione para abrir as configurações</string>
     <string name="notif_title">Velociraptor Limite de velocidade</string>
     <string name="accessibility_service_description">Para detectar que a aplicação se encontra em primeiro plano e mostrar o limite de velocidade, o Serviço de Acessibilidade necessita de estar activo.</string>

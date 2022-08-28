@@ -1,3 +1,5 @@
+This is fork of Velociraptor, which continues beeping when speeding and is called Triceratops. Maybe some other improvements in the future?
+
 ![Icon](./app/src/main/res/mipmap-mdpi/ic_launcher.png) Velociraptor
 =========
 Floating speed limit monitor for Android with speedometer and warning features.

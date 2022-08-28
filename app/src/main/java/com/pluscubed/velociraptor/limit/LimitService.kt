@@ -51,6 +51,7 @@ class LimitService : LifecycleService() {
     private var lastLocationWithSpeed: Location? = null
     private var lastLocationWithFetchAttempt: Location? = null
 
+    private var beepLimit: Int = 0
     private var speedingStartTimestamp: Long = -1
     private var limitFetcher: LimitFetcher? = null
 
@@ -391,13 +392,35 @@ class LimitService : LifecycleService() {
 
             if (speedingStartTimestamp == -1L) {
                 speedingStartTimestamp = currentTimeMillis
-            } else if (currentTimeMillis > speedingStartTimestamp + 2000L && beepEnabled) {
-                Utils.playBeeps()
-                speedingStartTimestamp = currentTimeMillis
+            }
+
+            if (beepEnabled) {
+                if (currentTimeMillis > speedingStartTimestamp + 1000L && beepEnabled && beepLimit == 0) {
+                    Utils.playBeeps()
+                    beepLimit += 1
+                    speedingStartTimestamp = currentTimeMillis
+                } else if (currentTimeMillis > speedingStartTimestamp + 3000L && beepEnabled && beepLimit < 5) {
+                    Utils.playBeeps()
+                    beepLimit += 1
+                    speedingStartTimestamp = currentTimeMillis
+                } else if (currentTimeMillis > speedingStartTimestamp + 5000L && beepEnabled && beepLimit < 10) {
+                    Utils.playBeeps()
+                    beepLimit += 1
+                    speedingStartTimestamp = currentTimeMillis
+                } else if (currentTimeMillis > speedingStartTimestamp + 30000L && beepEnabled) {
+                    Utils.playBeeps()
+                    beepLimit += 1
+                    speedingStartTimestamp = currentTimeMillis
+                }
             }
         } else {
             speedLimitView?.setSpeeding(false)
             speedingStartTimestamp = -1
+
+            if (beepLimit > 0) {
+                beepLimit = 0
+                Utils.playGoodBeeps()
+            }
         }
 
         speedLimitView?.setSpeed(convertToUiSpeed(kmhSpeed), speedometerPercentage)

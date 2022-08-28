@@ -95,10 +95,24 @@ object Utils {
         Handler().postDelayed({ playTone() }, 300)
     }
 
+    fun playGoodBeeps() {
+        playGoodTone()
+        Handler().postDelayed({ playGoodTone() }, 600)
+        Handler().postDelayed({ playGoodTone() }, 600)
+    }
+
     private fun playTone() {
         try {
             val toneGen1 = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
             toneGen1.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 100)
+        } catch (ignored: RuntimeException) {
+        }
+    }
+
+    private fun playGoodTone() {
+        try {
+            val toneGen1 = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
+            toneGen1.startTone(ToneGenerator.TONE_CDMA_CONFIRM, 100)
         } catch (ignored: RuntimeException) {
         }
     }

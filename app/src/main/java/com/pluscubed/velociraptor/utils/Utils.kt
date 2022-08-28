@@ -98,7 +98,7 @@ object Utils {
     fun playGoodBeeps() {
         playGoodTone()
         Handler().postDelayed({ playGoodTone() }, 600)
-        Handler().postDelayed({ playGoodTone() }, 600)
+        Handler().postDelayed({ playGoodTone() }, 1200)
     }
 
     private fun playTone() {

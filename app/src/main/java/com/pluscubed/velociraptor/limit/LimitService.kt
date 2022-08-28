@@ -393,7 +393,7 @@ class LimitService : LifecycleService() {
                 speedingStartTimestamp = currentTimeMillis
             } else if (currentTimeMillis > speedingStartTimestamp + 2000L && beepEnabled) {
                 Utils.playBeeps()
-                speedingStartTimestamp = java.lang.Long.MAX_VALUE - 2000L
+                speedingStartTimestamp = currentTimeMillis
             }
         } else {
             speedLimitView?.setSpeeding(false)

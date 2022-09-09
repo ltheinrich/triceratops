@@ -23,6 +23,8 @@ import okhttp3.OkHttpClient
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
+import java.util.Calendar
+import java.util.Calendar
 
 class OsmLimitProvider(
         private val context: Context,
@@ -164,7 +166,10 @@ class OsmLimitProvider(
 
                 //Get speed limit
                 val maxspeed = tags.maxspeed
-                if (maxspeed != null) {
+                val maxspeedConditional = tags.maxspeedConditional
+                if (maxspeedConditional != null) {
+                    limitResponse = limitResponse.copy(speedLimit = parseOsmSpeedLimitConditional(maxspeed, maxspeedConditional))
+                } else if(maxspeed != null) {
                     limitResponse = limitResponse.copy(speedLimit = parseOsmSpeedLimit(maxspeed))
                 }
 
@@ -213,6 +218,91 @@ class OsmLimitProvider(
         }
 
         return speedLimit
+    }
+
+    private fun parseOsmSpeedLimitConditional(maxspeedNormal: String, maxspeedConditional: String): Int {
+        val split = maxspeedConditional.split("@")
+        val maxspeed = split.first().trim()
+        val speedLimitConditional = parseOsmSpeedLimit(maxspeed)
+        var speedLimitNormal = speedLimitConditional
+        if (maxspeedNormal != null) {
+            speedLimitNormal = parseOsmSpeedLimit(maxspeedNormal)
+        }
+
+        var condition = maxspeed.last().replace("(", "").replace(")", "").trim()
+        if (!condition.contains("-")) {
+            return speedLimitNormal
+        }
+
+        if (!condition.charAt(0).isDigit()) {
+            val day1 = condition.substring(0, 2).toLowerCase().replace("tu", "di").replace("we", "mi").replace("th", "do").replace("su", "so")
+            var day2 = condition.substring(3, 5).toLowerCase().replace("tu", "di").replace("we", "mi").replace("th", "do").replace("su", "so")
+            var cut = 5
+            if (condition.charAt(2).equals(' ')) {
+                day2 = condition.substring(5, 7)
+                cut = 7
+            }
+
+            val days = ["mo", "di", "mi", "do", "fr", "sa", "so"]
+            val pos1 = findPos(days, 0, day1)
+            val pos2 = findPos(days, 0, day2)
+            var current = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1
+            if (pos2 > pos1 && current < pos1 && current > pos2) {
+                return speedLimitNormal
+            } else if (pos2 < pos1 && current > pos1 && current < pos2) {
+                return speedLimitNormal
+            }
+
+            condition = condition.substring(cut, condition.length()).trim()
+        }
+
+        val time = condition.split(",").first().trim().split("-")
+        if (condition.contains(":")) {
+            val time1 = time.first().trim().split(":")
+            val time2 = time.last().trim().split(":")
+
+            try {
+                val h1 = Integer.valueOf(time1.first().trim())
+                var min1 = Integer.valueOf(time1.last().trim())
+                val h2 = Integer.valueOf(time2.first().trim())
+                var min2 = Integer.valueOf(time2.last().trim())
+
+                val calendar = Calendar.getInstance()
+                currentH = calendar.get(java.util.Calendar.HOUR_OF_DAY)
+                currentMin = calendar.get(java.util.Calendar.MINUTE)
+                // TODO START
+                if (h2 > h1 ) {
+
+                } else if
+
+                if (h2 > h1 && currentH < h1 && currentH > h2) {
+
+                    if ((currentMin < min1 && currentH == h1) || (currentMin > min2 && ))
+                } else if (h1 < h2) {
+
+                }
+                // TODO END
+            } catch (Exception: ex) {
+                ex.printStackTrace()
+            }
+        } else {
+
+        }
+
+        return speedLimitConditional
+    }
+
+    private fun findPos(values: String[], start: Int, v: String) {
+        if (start < 0)
+            return -1
+
+        for (i in start..values.length) {
+            if (values[i].equalsIgnoreCase(v)) {
+                return i
+            }
+        }
+
+        return -1
     }
 
     private fun getBestElement(elements: List<Element>, lastResponse: LimitResponse?): Element? {

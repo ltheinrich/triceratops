@@ -11,6 +11,8 @@ data class LimitResponse(
          * In km/h, -1 if limit does not exist
          */
         val speedLimit: Int = -1,
+        val speedLimitConditional: Int = -1,
+        val speedLimitCondition: String = "",
         val roadName: String = "",
         val coords: List<Coord> = ArrayList(),
         val timestamp: Long = 0

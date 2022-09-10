@@ -61,7 +61,7 @@ public class Tags {
     }
 
     /**
-     * @param maxspeed The maxspeed conditional
+     * @param maxspeedConditional The maxspeed conditional
      */
     @JsonProperty("maxspeed:conditional")
     public void setMaxspeedConditional(String maxspeedConditional) {

@@ -221,12 +221,21 @@ class LimitService : LifecycleService() {
 
     private fun startNotification() {
         val notificationIntent = Intent(this, SettingsActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-                this,
-                PENDING_SETTINGS,
-                notificationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT
-        )
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                    this,
+                    PENDING_SETTINGS,
+                    notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_MUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
+                    this,
+                    PENDING_SETTINGS,
+                    notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT
+            )
+        }
 
         NotificationUtils.initChannels(this)
         val notification = NotificationCompat.Builder(this, NotificationUtils.CHANNEL_RUNNING)
@@ -285,7 +294,7 @@ class LimitService : LifecycleService() {
         val speedLimitInactive = speedLimitJob == null || !speedLimitJob!!.isActive
         val showLimits = PrefUtils.getShowLimits(this@LimitService)
         val farFromLastLocation = lastLocationWithFetchAttempt == null ||
-                location.distanceTo(lastLocationWithFetchAttempt) > 10
+                location.distanceTo(lastLocationWithFetchAttempt!!) > 10
 
         if (speedLimitInactive && !isLimitHidden && showLimits && farFromLastLocation) {
             speedLimitJob = lifecycleScope.launch {

@@ -1,6 +1,5 @@
 package com.pluscubed.velociraptor.api
 
-import com.pluscubed.velociraptor.api.osm.OsmLimitProvider
 import java.util.*
 
 data class LimitResponse(
@@ -13,6 +12,7 @@ data class LimitResponse(
          */
         val speedLimitNormal: Int = -1,
         val speedLimitConditional: SpeedLimitConditional? = null,
+        val speedLimitVariable: Boolean = false,
         val roadName: String = "",
         val coords: List<Coord> = ArrayList(),
         val timestamp: Long = 0

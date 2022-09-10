@@ -85,23 +85,44 @@ class AdvancedFragment : Fragment() {
         notifControlsContainer.setOnClickListener {
             val intent = Intent(context, LimitService::class.java)
             intent.putExtra(LimitService.EXTRA_NOTIF_START, true)
-            val pending = PendingIntent.getService(
+            val pending = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.getService(
+                        context,
+                        PENDING_SERVICE, intent, PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_MUTABLE
+                )
+            } else {
+                PendingIntent.getService(
                     context,
                     PENDING_SERVICE, intent, PendingIntent.FLAG_CANCEL_CURRENT
-            )
+                )
+            }
 
             val intentClose = Intent(context, LimitService::class.java)
             intentClose.putExtra(LimitService.EXTRA_NOTIF_CLOSE, true)
-            val pendingClose = PendingIntent.getService(
+            val pendingClose = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.getService(
+                        context,
+                        PENDING_SERVICE_CLOSE, intentClose, PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_MUTABLE
+                )
+            } else {
+                PendingIntent.getService(
                     context,
                     PENDING_SERVICE_CLOSE, intentClose, PendingIntent.FLAG_CANCEL_CURRENT
-            )
+                )
+            }
 
             val settings = Intent(context, SettingsActivity::class.java)
-            val settingsIntent = PendingIntent.getActivity(
+            val settingsIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.getActivity(
+                        context,
+                        PENDING_SETTINGS, settings, PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_MUTABLE
+                )
+            } else {
+                PendingIntent.getActivity(
                     context,
                     PENDING_SETTINGS, settings, PendingIntent.FLAG_CANCEL_CURRENT
-            )
+                )
+            }
 
             NotificationUtils.initChannels(context)
             val builder =

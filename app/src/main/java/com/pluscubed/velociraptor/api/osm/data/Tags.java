@@ -15,6 +15,8 @@ public class Tags {
     private String maxspeed;
     @JsonProperty("maxspeed:conditional")
     private String maxspeedConditional;
+    @JsonProperty("maxspeed:variable")
+    private String maxspeedVariable;
     @JsonProperty("name")
     private String name;
     @JsonProperty("ref")
@@ -66,6 +68,22 @@ public class Tags {
     @JsonProperty("maxspeed:conditional")
     public void setMaxspeedConditional(String maxspeedConditional) {
         this.maxspeedConditional = maxspeedConditional;
+    }
+
+    /**
+     * @return The maxspeed variable
+     */
+    @JsonProperty("maxspeed:variable")
+    public String getMaxspeedVariable() {
+        return maxspeedVariable;
+    }
+
+    /**
+     * @param maxspeedVariable The maxspeed variable
+     */
+    @JsonProperty("maxspeed:variable")
+    public void setMaxspeedVariable(String maxspeedVariable) {
+        this.maxspeedVariable = maxspeedVariable;
     }
 
     /**

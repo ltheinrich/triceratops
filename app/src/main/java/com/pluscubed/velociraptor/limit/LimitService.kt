@@ -403,20 +403,20 @@ class LimitService : LifecycleService() {
                 speedingStartTimestamp = currentTimeMillis
             }
 
-            if (beepEnabled) {
-                if (currentTimeMillis > speedingStartTimestamp + 1000L && beepEnabled && beepLimit == 0) {
+            if (beepEnabled && isCurrentSpeedLimitVariableOrConditional()) {
+                if (currentTimeMillis > speedingStartTimestamp + 1000L && beepLimit == 0) {
                     Utils.playBeeps()
                     beepLimit += 1
                     speedingStartTimestamp = currentTimeMillis
-                } else if (currentTimeMillis > speedingStartTimestamp + 3000L && beepEnabled && beepLimit < 5) {
+                } else if (currentTimeMillis > speedingStartTimestamp + 3000L && beepLimit < 5) {
                     Utils.playBeeps()
                     beepLimit += 1
                     speedingStartTimestamp = currentTimeMillis
-                } else if (currentTimeMillis > speedingStartTimestamp + 5000L && beepEnabled && beepLimit < 10) {
+                } else if (currentTimeMillis > speedingStartTimestamp + 5000L && beepLimit < 10) {
                     Utils.playBeeps()
                     beepLimit += 1
                     speedingStartTimestamp = currentTimeMillis
-                } else if (currentTimeMillis > speedingStartTimestamp + 30000L && beepEnabled) {
+                } else if (currentTimeMillis > speedingStartTimestamp + 30000L) {
                     Utils.playBeeps()
                     beepLimit += 1
                     speedingStartTimestamp = currentTimeMillis
@@ -439,6 +439,8 @@ class LimitService : LifecycleService() {
 
     private fun getCurrentSpeedLimit() = currentLimitResponse?.speedLimit() ?: -1
 
+    private fun isCurrentSpeedLimitVariableOrConditional() = currentLimitResponse?.speedLimitVariable == true || currentLimitResponse?.speedLimitConditional?.check() ?: false
+
     private fun convertToUiSpeed(kmhSpeed: Int): Int {
         var speed = kmhSpeed
         if (!PrefUtils.getUseMetric(this)) {
@@ -449,12 +451,21 @@ class LimitService : LifecycleService() {
 
     internal fun showWarningNotification(stringRes: Int) {
         val notificationIntent = Intent(this, SettingsActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                    this,
+                    PENDING_SETTINGS,
+                    notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_MUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
                 this,
                 PENDING_SETTINGS,
                 notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT
-        )
+            )
+        }
 
         NotificationUtils.initChannels(this)
         val notificationText = getString(stringRes)

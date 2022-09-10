@@ -167,7 +167,11 @@ class OsmLimitProvider(
                 //Get speed limit
                 val maxspeed = tags.maxspeed
                 val maxspeedConditional = tags.maxspeedConditional
+                val maxspeedVariable = tags.maxspeedVariable
 
+                if (maxspeedVariable != null && !maxspeedVariable.equals("no")) {
+                    limitResponse = limitResponse.copy(speedLimitVariable = true)
+                }
                 if (maxspeed != null) {
                     limitResponse = limitResponse.copy(speedLimitNormal = parseOsmSpeedLimit(maxspeed))
                 }

@@ -63,7 +63,7 @@ class CacheLimitProvider(private val context: Context) : LimitProvider {
                 )
 
         val onPathWays = selectedWays
-                .filter { (_, _, _, _, _, _, _, _, _, _, _, lat1, lon1, lat2, lon2) ->
+                .filter { (_, _, _, _, _, _, _, _, _, _, _, _, lat1, lon1, lat2, lon2) ->
                     val coord1 = Coord(lat1, lon1)
                     val coord2 = Coord(lat2, lon2)
                     isLocationOnPath(coord1, coord2, coord)
@@ -75,7 +75,8 @@ class CacheLimitProvider(private val context: Context) : LimitProvider {
             return listOf(
                     LimitResponse(
                             timestamp = System.currentTimeMillis(),
-                            fromCache = true
+                            fromCache = true,
+
                     ).initDebugInfo(debuggingEnabled)
             )
         }

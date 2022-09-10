@@ -17,6 +17,7 @@ data class Way(
         val maxspeedConditionalMin1: Int?,
         val maxspeedConditionalH2: Int?,
         val maxspeedConditionalMin2: Int?,
+        val maxspeedVariable: Boolean,
         val timestamp: Long,
         val lat1: Double,
         val lon1: Double,
@@ -46,6 +47,7 @@ data class Way(
                         response.speedLimitConditional?.min1,
                         response.speedLimitConditional?.h2,
                         response.speedLimitConditional?.min2,
+                        response.speedLimitVariable,
                         response.timestamp,
                         coord1.lat, coord1.lon, coord2.lat, coord2.lon,
                         response.roadName,
@@ -67,6 +69,7 @@ data class Way(
         return LimitResponse(
                 speedLimitNormal = maxspeedNormal,
                 speedLimitConditional = maxspeedConditional,
+                speedLimitVariable = maxspeedVariable,
                 timestamp = timestamp,
                 roadName = road,
                 origin = origin,

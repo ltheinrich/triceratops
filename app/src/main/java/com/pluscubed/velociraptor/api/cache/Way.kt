@@ -9,7 +9,14 @@ import java.util.*
 data class Way(
         val clat: Double,
         val clon: Double,
-        val maxspeed: Int,
+        val maxspeedNormal: Int,
+        val maxspeedConditionalLimit: Int?,
+        val maxspeedConditionalDay1: Int?,
+        val maxspeedConditionalDay2: Int?,
+        val maxspeedConditionalH1: Int?,
+        val maxspeedConditionalMin1: Int?,
+        val maxspeedConditionalH2: Int?,
+        val maxspeedConditionalMin2: Int?,
         val timestamp: Long,
         val lat1: Double,
         val lon1: Double,
@@ -31,7 +38,14 @@ data class Way(
 
                 val way = Way(
                         clat, clon,
-                        response.speedLimit,
+                        response.speedLimitNormal,
+                        response.speedLimitConditional?.speedLimit,
+                        response.speedLimitConditional?.day1,
+                        response.speedLimitConditional?.day2,
+                        response.speedLimitConditional?.h1,
+                        response.speedLimitConditional?.min1,
+                        response.speedLimitConditional?.h2,
+                        response.speedLimitConditional?.min2,
                         response.timestamp,
                         coord1.lat, coord1.lon, coord2.lat, coord2.lon,
                         response.roadName,
@@ -44,8 +58,15 @@ data class Way(
     }
 
     fun toResponse(): LimitResponse {
+        val maxspeedConditional = if (maxspeedConditionalLimit != null && maxspeedConditionalH1 != null && maxspeedConditionalMin1 != null && maxspeedConditionalH2 != null && maxspeedConditionalMin2 != null) {
+            LimitResponse.SpeedLimitConditional(speedLimit = maxspeedConditionalLimit, day1 = maxspeedConditionalDay1, day2 = maxspeedConditionalDay2, h1 = maxspeedConditionalH1, min1 = maxspeedConditionalMin1, h2 = maxspeedConditionalH2, min2 = maxspeedConditionalMin2)
+        } else {
+            null
+        }
+
         return LimitResponse(
-                speedLimit = maxspeed,
+                speedLimitNormal = maxspeedNormal,
+                speedLimitConditional = maxspeedConditional,
                 timestamp = timestamp,
                 roadName = road,
                 origin = origin,

@@ -63,7 +63,7 @@ class CacheLimitProvider(private val context: Context) : LimitProvider {
                 )
 
         val onPathWays = selectedWays
-                .filter { (_, _, _, _, lat1, lon1, lat2, lon2) ->
+                .filter { (_, _, _, _, _, _, _, _, _, _, _, lat1, lon1, lat2, lon2) ->
                     val coord1 = Coord(lat1, lon1)
                     val coord2 = Coord(lat2, lon2)
                     isLocationOnPath(coord1, coord2, coord)
@@ -89,8 +89,8 @@ class CacheLimitProvider(private val context: Context) : LimitProvider {
                         val roadNameSimilar2 = isRoadNameSimilar(way2, previousRoadName)
 
                         if (roadNameSimilar1 == roadNameSimilar2) {
-                            val speedExists1 = way1.maxspeed != -1
-                            val speedExists2 = way2.maxspeed != -1
+                            val speedExists1 = way1.maxspeedNormal != -1
+                            val speedExists2 = way2.maxspeedNormal != -1
 
                             if (speedExists1 == speedExists2) {
                                 //Higher origin = further to the front

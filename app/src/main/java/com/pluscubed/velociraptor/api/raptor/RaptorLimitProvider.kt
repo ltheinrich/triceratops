@@ -140,7 +140,7 @@ class RaptorLimitProvider(
             }
             val response = LimitResponse(
                     roadName = if (raptorResponse.name.isEmpty()) "null" else raptorResponse.name,
-                    speedLimit = speedLimit,
+                    /* TODO */ speedLimitNormal = 10, // TODO
                     timestamp = System.currentTimeMillis(),
                     coords = coords,
                     origin = getOriginInt(isHere)

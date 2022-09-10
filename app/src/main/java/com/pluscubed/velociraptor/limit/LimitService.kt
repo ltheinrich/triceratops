@@ -437,7 +437,7 @@ class LimitService : LifecycleService() {
         lastLocationWithSpeed = location
     }
 
-    private fun getCurrentSpeedLimit() = currentLimitResponse?.speedLimit ?: -1
+    private fun getCurrentSpeedLimit() = currentLimitResponse?.speedLimit() ?: -1
 
     private fun convertToUiSpeed(kmhSpeed: Int): Int {
         var speed = kmhSpeed

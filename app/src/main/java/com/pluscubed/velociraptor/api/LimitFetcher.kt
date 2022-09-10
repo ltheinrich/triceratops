@@ -61,7 +61,7 @@ class LimitFetcher(private val context: Context) {
 
         val networkConnected = Utils.isNetworkConnected(context)
 
-        if (limitResponses.last().speedLimit == -1 && networkConnected) {
+        if (limitResponses.last().speedLimit() == -1 && networkConnected) {
             // Delay network query if the last response was received less than 5 seconds ago
             if (lastNetworkResponse != null) {
                 val delayMs = 5000 - (System.currentTimeMillis() - lastNetworkResponse!!.timestamp)
@@ -70,14 +70,14 @@ class LimitFetcher(private val context: Context) {
         }
 
         // 1. Always try raptor service if cache didn't hit / didn't contain a limit
-        if (limitResponses.last().speedLimit == -1 && networkConnected) {
+        if (limitResponses.last().speedLimit() == -1 && networkConnected) {
             val hereResponses =
                     raptorLimitProvider.getSpeedLimit(location, lastResponse, LimitResponse.ORIGIN_HERE)
             if (hereResponses.isNotEmpty())
                 limitResponses += hereResponses[0]
         }
 
-        if (limitResponses.last().speedLimit == -1 && networkConnected) {
+        if (limitResponses.last().speedLimit() == -1 && networkConnected) {
             val tomtomResponses = raptorLimitProvider.getSpeedLimit(
                     location,
                     lastResponse,
@@ -87,7 +87,7 @@ class LimitFetcher(private val context: Context) {
                 limitResponses += tomtomResponses[0]
         }
 
-        if (limitResponses.last().speedLimit == -1 && networkConnected) {
+        if (limitResponses.last().speedLimit() == -1 && networkConnected) {
             // 2. Try OSM if the cache hits didn't contain a limit BUT were not from OSM
             //    i.e. query OSM as it might have the limit
             var cachedOsmWithNoLimit = false

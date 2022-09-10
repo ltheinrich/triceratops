@@ -195,7 +195,7 @@ class AppSelectionActivity : AppCompatActivity() {
 
     private fun onItemClick(appInfo: AppInfo, checked: Boolean) {
         if (appInfo.packageName != null && !appInfo.packageName.isEmpty()) {
-            if (checked) {
+            if (checked || appInfo.packageName.contains("blitzer") || appInfo.packageName.contains("lockito")) {
                 selectedPackageNames?.add(appInfo.packageName)
             } else {
                 selectedPackageNames?.remove(appInfo.packageName)
@@ -254,8 +254,7 @@ class AppSelectionActivity : AppCompatActivity() {
 
             holder.title.text = app.name
             holder.desc.text = app.packageName
-            holder.checkbox.isChecked = selectedPackageNames!!.contains(app.packageName)
-
+            holder.checkbox.isChecked = selectedPackageNames!!.contains(app.packageName) || app.packageName.contains("blitzer") || app.packageName.contains("lockito")
         }
 
         override fun getItemCount(): Int {

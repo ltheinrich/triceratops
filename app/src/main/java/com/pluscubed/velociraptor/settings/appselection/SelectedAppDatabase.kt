@@ -26,11 +26,10 @@ object SelectedAppDatabase {
         val gmmIntentUri = Uri.parse("geo:37.421999,-122.084056")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         val manager = context.packageManager
-        val mapApps: List<ResolveInfo>
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mapApps = manager.queryIntentActivities(mapIntent, PackageManager.MATCH_ALL)
+        val mapApps: List<ResolveInfo> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager.queryIntentActivities(mapIntent, PackageManager.MATCH_ALL)
         } else {
-            mapApps = manager.queryIntentActivities(mapIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            manager.queryIntentActivities(mapIntent, PackageManager.MATCH_DEFAULT_ONLY)
         }
 
         for (info in mapApps) {
@@ -39,6 +38,17 @@ object SelectedAppDatabase {
             appInfo.name = info.loadLabel(context.packageManager).toString()
             appInfos.add(appInfo)
         }
+
+        val blitzer = AppInfo()
+        blitzer.packageName = "de.blitzer.plus"
+        blitzer.name = "Blitzer.de PLUS"
+        appInfos.add(blitzer)
+
+        val lockito = AppInfo()
+        lockito.packageName = "fr.dvilleneuve.lockito"
+        lockito.name = "Lockito"
+        appInfos.add(lockito)
+
         return appInfos
     }
 

@@ -37,14 +37,16 @@ data class LimitResponse(
     ) {
         fun check(): Boolean {
             val calendar = Calendar.getInstance()
-            val current = calendar.get(Calendar.DAY_OF_WEEK) - 1
+            var current = calendar.get(Calendar.DAY_OF_WEEK) - 2
             val currentH = calendar.get(Calendar.HOUR_OF_DAY)
             val currentMin = calendar.get(Calendar.MINUTE)
+            if (current == -1)
+                current = 6
 
             if (day1 != null && day2 != null) {
-                if (day2 > day1 && current < day1 && current > day2) {
+                if (day1 < day2 && (current < day1 || current > day2)) {
                     return false
-                } else if (day2 < day1 && current > day1 && current < day2) {
+                } else if (day2 < day1 && (current > day1 || current < day2)) {
                     return false
                 }
             }

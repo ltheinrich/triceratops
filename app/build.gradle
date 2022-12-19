@@ -44,8 +44,8 @@ android {
         applicationId "de.ltheinrich.triceratops"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 63
-        versionName "1.8.3"
+        versionCode 64
+        versionName "1.8.4"
         vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [appName: "@string/app_name"]
 

@@ -1,4 +1,4 @@
-This is fork of Velociraptor, which continues beeping when speeding and is called Triceratops. Maybe some other improvements in the future?
+This is a fork of Velociraptor, which continues beeping when speeding and is called Triceratops. Maybe some other improvements in the future?
 
 ![Icon](./app/src/main/res/mipmap-mdpi/ic_launcher.png) Velociraptor
 =========
